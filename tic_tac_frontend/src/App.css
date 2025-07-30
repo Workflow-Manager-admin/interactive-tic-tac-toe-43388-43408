@@ -8,6 +8,16 @@
   --border-color: #e9ecef;
   --button-bg: #007bff;
   --button-text: #ffffff;
+
+  /* Custom palette for tic-tac-toe */
+  --primary-color: #1976d2;
+  --secondary-color: #424242;
+  --accent-color: #ffca28;
+  --ttt-square-bg: #fff;
+  --ttt-square-hover: #f3f8fd;
+  --ttt-square-border: #1976d2;
+  --ttt-square-highlight: #ffca28;
+  --ttt-title: #1976d2;
 }
 
 [data-theme="dark"] {
@@ -33,31 +43,170 @@
   height: 40vmin;
   pointer-events: none;
 }
+/* Tic-Tac-Toe custom styles */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ttt-app-bg {
+  background: linear-gradient(120deg, #e6eeff 0%, #fff 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
+.ttt-header {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
   position: relative;
+  padding: 0;
+  background: none;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.ttt-container {
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 14px 4px rgba(25, 118, 210, 0.07), 0 1.5px 5px 0 rgba(80,80,80, 0.04);
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.ttt-title {
+  color: var(--ttt-title, #1976d2);
+  font-size: 2.7rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.3px;
+}
+.ttt-controls {
+  margin-bottom: 1.5rem;
+}
+
+.ttt-status {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.ttt-status.turn span {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.ttt-status.winner span {
+  color: var(--ttt-square-highlight, #ffca28);
+  font-weight: 800;
+}
+.ttt-status.draw {
+  color: var(--secondary-color, #424242);
+}
+
+.ttt-board {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  padding: 0.2rem;
+  background: var(--bg-secondary, #f8f9fa);
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+.ttt-board-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+}
+
+.ttt-square {
+  width: 72px;
+  height: 72px;
+  font-size: 2.3rem;
+  font-weight: 800;
+  background: var(--ttt-square-bg, #fff);
+  border: 2.2px solid var(--ttt-square-border, #1976d2);
+  color: var(--primary-color, #1976d2);
+  border-radius: 12px;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1.5px 6px 0 rgba(80,80,80,.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border .12s, box-shadow .2s, color .2s, background .2s;
+  user-select: none;
+}
+
+.ttt-square:not(:disabled):hover,
+.ttt-square:not(:disabled):focus {
+  background: var(--ttt-square-hover, #f3f8fd);
+  border-color: var(--accent-color, #ffca28);
+  color: var(--accent-color, #ffca28);
+}
+
+.ttt-square:disabled {
+  cursor: not-allowed;
+  background: #ededed;
+}
+
+.ttt-square.highlight {
+  background: var(--ttt-square-highlight, #ffca28) !important;
+  color: #fff !important;
+  border-color: var(--accent-color, #ffca28) !important;
+  box-shadow: 0 0 0 3px #ffe18a99;
+}
+
+.ttt-reset-btn {
+  background: var(--button-bg, #1976d2);
+  color: var(--button-text, #fff);
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.0rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+  letter-spacing: 0.5px;
+}
+
+.ttt-reset-btn:hover {
+  background: var(--accent-color, #ffca28);
+  color: var(--primary-color, #1976d2);
+  box-shadow: 0 6px 24px rgba(255,202,40,0.12);
+  border: 1.5px solid var(--primary-color, #1976d2);
+  opacity: 0.96;
+}
+
+.ttt-reset-btn:active {
+  outline: none;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ttt-container {
+    min-width: 220px;
+    padding: 1rem 0.2rem;
+  }
+  .ttt-title {
+    font-size: 1.7rem;
+  }
+  .ttt-square {
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
+    border-radius: 7px;
+  }
+  .ttt-reset-btn {
+    padding: 0.45rem 1.3rem;
+    font-size: 0.93rem;
+  }
+}
+
+/* Existing theme toggle button */
 .theme-toggle {
   position: absolute;
   top: 20px;
@@ -84,6 +233,7 @@
   transform: translateY(0);
 }
 
+/* Maintain keyframes & legacy styles */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -93,7 +243,7 @@
   }
 }
 
-/* Responsive design for mobile */
+/* Responsive for logo, theme toggle (existing) */
 @media (max-width: 768px) {
   .theme-toggle {
     top: 10px;
